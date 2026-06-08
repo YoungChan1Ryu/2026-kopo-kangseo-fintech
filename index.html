@@ -19,7 +19,6 @@
             color: #333;
         }
 
-        /* 🛠️ 헤더 두께 일치 처리 (sticky 제거 완료) */
         header {
             background: #333;
             color: #fff;
@@ -40,17 +39,17 @@
             margin-left: 15px;
         }
 
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
         .hero {
             background: linear-gradient(135deg, #007bff, #0056b3);
             color: white;
             text-align: center;
             padding: 4rem 1rem;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1rem;
         }
 
         /* 3분할 그리드 영역 */
@@ -144,19 +143,18 @@
             border: 0;
         }
 
-        /* 🛠️ [index 전용 미니 슬라이더 레이아웃] */
+        /* [index 전용 미니 슬라이더 레이아웃] */
         .index-slider-container {
-            display: none; /* 데이터를 다 불러오면 스크립트가 block으로 전환 */
+            display: none;
             position: relative;
             width: 100%;
             align-items: center;
             justify-content: center;
         }
 
-        /* 미니 슬라이더 내부의 이미지 출력 창 */
         .index-slider-view {
             width: 100%;
-            height: 220px; /* 메인화면 그리드 밸런스에 맞춘 깔끔한 크기 */
+            height: 220px;
             border-radius: 6px;
             overflow: hidden;
             background: #fafafa;
@@ -169,7 +167,6 @@
             display: block;
         }
 
-        /* 미니 슬라이더 좌우 화살표 버튼 */
         .index-nav-btn {
             position: absolute;
             top: 50%;
@@ -202,7 +199,6 @@
         .index-nav-btn.prev { left: 8px; }
         .index-nav-btn.next { right: 8px; }
 
-        /* 블로그 미리보기 박스 */
         .blog-preview-box {
             background-color: #f8fafc;
             border: 1px solid #e2e8f0;
@@ -221,7 +217,7 @@
         .blog-preview-box p {
             font-size: 0.85rem;
             color: #718096;
-            line-height: 1.6;
+            line-height: 1.5;
         }
 
         footer {
@@ -229,6 +225,44 @@
             padding: 2rem;
             color: #aaa;
             font-size: 0.85rem;
+        }
+
+        /* 🛠️ 모바일 상단바 및 그리드 레이아웃 최적화 수립 */
+        @media (max-width: 650px) {
+            header {
+                padding: 0.8rem 0.5rem;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 0.6rem;
+                text-align: center;
+            }
+
+            nav h2 {
+                font-size: 1.2rem;
+            }
+
+            nav a {
+                margin: 0 8px;
+                font-size: 0.95rem;
+            }
+
+            .hero {
+                padding: 2.5rem 1rem;
+            }
+
+            .hero h1 {
+                font-size: 1.4rem;
+            }
+
+            .preview-section {
+                grid-template-columns: 1fr; /* 모바일은 한 줄로 배치 */
+            }
+
+            .index-slider-view {
+                height: 180px;
+            }
         }
     </style>
 </head>
@@ -276,9 +310,8 @@
                 <a href="cardnews.html" class="btn">카드뉴스 페이지로 이동 &rarr;</a>
 
                 <div class="preview-content">
-                    <div class="preview-title" id="cardnewsTitle">🖼️ 카드뉴스 미리보기 (1 / -)</div>
+                    <div class="preview-title" id="cardnewsTitle">🖼️ 카드뉴스 미리보기</div>
                     <span class="loading-text" id="imageLoading">이미지를 불러오는 중...</span>
-                    
                     <div class="index-slider-container" id="cardnewsSlider">
                         <button class="index-nav-btn prev" id="idxPrevBtn" onclick="moveIdxSlide(-1)">&lt;</button>
                         <div class="index-slider-view">
@@ -310,7 +343,6 @@
     <footer>&copy; 2026년도 2기 홍보 서포터즈. All rights reserved.</footer>
 
     <script>
-        // index.html 전용 카드뉴스 배열 및 슬라이더 제어 변수 선언
         let cardnewsImages = [];
         let currentSliderIdx = 0;
 
@@ -319,30 +351,24 @@
         const idxPrevBtn = document.getElementById('idxPrevBtn');
         const idxNextBtn = document.getElementById('idxNextBtn');
 
-        // 슬라이더 화면 갱신 함수
         function updateIndexSlider() {
-            if(cardnewsImages.length === 0) return;
-            
-            // 이미지 변경 및 타이틀 카운터 동기화
+            if (cardnewsImages.length === 0) return;
             previewImg.src = cardnewsImages[currentSliderIdx];
             cardnewsTitle.innerText = `🖼️ 카드뉴스 미리보기 (${currentSliderIdx + 1} / ${cardnewsImages.length})`;
-
-            // 첫 페이지, 마지막 페이지 도달 시 화살표 비활성화 예외처리
             idxPrevBtn.disabled = (currentSliderIdx === 0);
             idxNextBtn.disabled = (currentSliderIdx === cardnewsImages.length - 1);
         }
 
-        // 화살표 클릭 동작 함수
         function moveIdxSlide(direction) {
             let nextTarget = currentSliderIdx + direction;
-            if(nextTarget >= 0 && nextTarget < cardnewsImages.length) {
+            if (nextTarget >= 0 && nextTarget < cardnewsImages.length) {
                 currentSliderIdx = nextTarget;
                 updateIndexSlider();
             }
         }
 
         document.addEventListener("DOMContentLoaded", function () {
-            // 1. video.html 에서 첫 번째 동영상 가져오기
+            // 1. 동영상 연동
             fetch('video.html')
                 .then(response => response.text())
                 .then(data => {
@@ -362,28 +388,26 @@
                     }
                 }).catch(err => console.log('동영상 로드 실패:', err));
 
-            // 2. cardnews.html 에서 모든 이미지 노드 일괄 수집 후 자체 연동 슬라이더 구동
+            // 2. 카드뉴스 연동 (동적 이미지 배열 수집)
             fetch('cardnews.html')
                 .then(response => response.text())
                 .then(data => {
                     const parser = new DOMParser();
                     const htmlDoc = parser.parseFromString(data, 'text/html');
-                    
-                    // cardnews.html 내 모든 이미지의 src 어트리뷰트 배열화 수집
                     const imgElements = htmlDoc.querySelectorAll('.gallery-item img');
                     imgElements.forEach(img => {
                         const srcVal = img.getAttribute('src');
-                        if(srcVal) cardnewsImages.push(srcVal);
+                        if (srcVal) cardnewsImages.push(srcVal);
                     });
 
                     if (cardnewsImages.length > 0) {
                         document.getElementById('imageLoading').style.display = 'none';
                         document.getElementById('cardnewsSlider').style.display = 'flex';
-                        updateIndexSlider(); // 첫 로드 상태 렌더링
+                        updateIndexSlider();
                     }
                 }).catch(err => console.log('카드뉴스 로드 실패:', err));
 
-            // 3. blog.html 에서 첫 번째 블로그 글 정보 가져오기 (글자 수 최대화 반영)
+            // 3. 블로그 연동 (150자 맞춤형 제한)
             fetch('blog.html')
                 .then(response => response.text())
                 .then(data => {
@@ -394,13 +418,11 @@
 
                     if (firstPostTitle && firstPostDesc) {
                         document.getElementById('previewBlogTitle').innerText = firstPostTitle.innerText;
-
                         let cleanText = firstPostDesc.innerText;
                         if (cleanText.length > 150) {
                             cleanText = cleanText.substring(0, 150) + '...';
                         }
                         document.getElementById('previewBlogDesc').innerText = cleanText;
-
                         document.getElementById('blogLoading').style.display = 'none';
                         document.getElementById('blogPreviewBox').style.display = 'block';
                     }

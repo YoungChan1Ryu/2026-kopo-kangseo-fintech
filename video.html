@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>스마트금융과 동영상</title>
     <style>
@@ -44,17 +45,18 @@
             padding: 0 1rem;
         }
 
+        /* 반응형 비디오 그리드 */
         .video-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 2rem;
-            margin-top: 1.5rem;
+            margin-top: 2rem;
         }
 
         .video-card {
             background: white;
             padding: 1rem;
-            border-radius: 8px;
+            border-radius: 6px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         }
 
@@ -79,13 +81,44 @@
             margin-top: 0.8rem;
             font-size: 1.1rem;
         }
+
+        /* 🛠️ 모바일 상단바 최적화 미디어 쿼리 */
+        @media (max-width: 650px) {
+            header {
+                padding: 0.8rem 0.5rem;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 0.6rem;
+                text-align: center;
+            }
+
+            nav h2 {
+                font-size: 1.2rem;
+            }
+
+            nav a {
+                margin: 0 8px;
+                font-size: 0.95rem;
+            }
+
+            .container {
+                margin: 1rem auto;
+            }
+
+            .video-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
     </style>
 </head>
 
 <body>
     <header>
         <nav>
-            <h2><a href="index.html" style="color:white;">2026년도 2기 홍보 서포터즈</a></h2>
+            <h2><a href="index.html" style="color:white; text-decoration: none;">2026년도 2기 홍보 서포터즈</a></h2>
             <div>
                 <a href="index.html">홈</a>
                 <a href="video.html" style="color:#007bff;">동영상</a>
@@ -107,10 +140,10 @@
             </div>
             <div class="video-card">
                 <div class="video-container">
-                    <iframe src="https://www.youtube.com/embed/nCFpKDOY32A" referrerpolicy="strict-origin"
+                    <iframe src="https://www.youtube.com/embed/S74KAsLg34U" referrerpolicy="strict-origin"
                         allowfullscreen></iframe>
                 </div>
-                <h3>스마트금융과 2026년도 간략소개</h3>
+                <h3>학과 실습실 탐방 및 졸업생 인터뷰</h3>
             </div>
         </div>
     </main>

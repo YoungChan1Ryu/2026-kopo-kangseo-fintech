@@ -19,6 +19,7 @@
             color: #333;
         }
 
+        /* 🛠️ 헤더 두께 일치 처리 (sticky 제거 완료) */
         header {
             background: #333;
             color: #fff;
@@ -39,17 +40,17 @@
             margin-left: 15px;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-
         .hero {
             background: linear-gradient(135deg, #007bff, #0056b3);
             color: white;
             text-align: center;
             padding: 4rem 1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
         }
 
         /* 3분할 그리드 영역 */
@@ -143,14 +144,65 @@
             border: 0;
         }
 
-        .image-wrapper img {
+        /* 🛠️ [index 전용 미니 슬라이더 레이아웃] */
+        .index-slider-container {
+            display: none; /* 데이터를 다 불러오면 스크립트가 block으로 전환 */
+            position: relative;
             width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 6px;
-            display: none;
+            align-items: center;
+            justify-content: center;
         }
 
+        /* 미니 슬라이더 내부의 이미지 출력 창 */
+        .index-slider-view {
+            width: 100%;
+            height: 220px; /* 메인화면 그리드 밸런스에 맞춘 깔끔한 크기 */
+            border-radius: 6px;
+            overflow: hidden;
+            background: #fafafa;
+        }
+
+        .index-slider-view img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* 미니 슬라이더 좌우 화살표 버튼 */
+        .index-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 123, 255, 0.85);
+            color: white;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 5;
+            transition: background 0.2s;
+        }
+
+        .index-nav-btn:hover {
+            background: #0056b3;
+        }
+
+        .index-nav-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            opacity: 0.4;
+        }
+
+        .index-nav-btn.prev { left: 8px; }
+        .index-nav-btn.next { right: 8px; }
+
+        /* 블로그 미리보기 박스 */
         .blog-preview-box {
             background-color: #f8fafc;
             border: 1px solid #e2e8f0;
@@ -169,7 +221,7 @@
         .blog-preview-box p {
             font-size: 0.85rem;
             color: #718096;
-            line-height: 1.5;
+            line-height: 1.6;
         }
 
         footer {
@@ -185,7 +237,7 @@
 
     <header>
         <nav>
-            <h2><a href="index.html" style="color:white;">2026년도 2기 홍보 서포터즈</a></h2>
+            <h2><a href="index.html" style="color:white; text-decoration: none;">2026년도 2기 홍보 서포터즈</a></h2>
             <div>
                 <a href="index.html">홈</a>
                 <a href="video.html">동영상</a>
@@ -224,10 +276,15 @@
                 <a href="cardnews.html" class="btn">카드뉴스 이동 &rarr;</a>
 
                 <div class="preview-content">
-                    <div class="preview-title" id="cardnewsTitle">🖼️ 카드뉴스 미리보기</div>
+                    <div class="preview-title" id="cardnewsTitle">🖼️ 카드뉴스 미리보기 (1 / -)</div>
                     <span class="loading-text" id="imageLoading">이미지를 불러오는 중...</span>
-                    <div class="image-wrapper">
-                        <img id="previewImg" src="" alt="카드뉴스 미리보기">
+                    
+                    <div class="index-slider-container" id="cardnewsSlider">
+                        <button class="index-nav-btn prev" id="idxPrevBtn" onclick="moveIdxSlide(-1)">&lt;</button>
+                        <div class="index-slider-view">
+                            <img id="previewImg" src="" alt="카드뉴스 미리보기">
+                        </div>
+                        <button class="index-nav-btn next" id="idxNextBtn" onclick="moveIdxSlide(1)">&gt;</button>
                     </div>
                 </div>
             </div>
@@ -253,6 +310,37 @@
     <footer>&copy; 2026년도 2기 홍보 서포터즈. All rights reserved.</footer>
 
     <script>
+        // index.html 전용 카드뉴스 배열 및 슬라이더 제어 변수 선언
+        let cardnewsImages = [];
+        let currentSliderIdx = 0;
+
+        const previewImg = document.getElementById('previewImg');
+        const cardnewsTitle = document.getElementById('cardnewsTitle');
+        const idxPrevBtn = document.getElementById('idxPrevBtn');
+        const idxNextBtn = document.getElementById('idxNextBtn');
+
+        // 슬라이더 화면 갱신 함수
+        function updateIndexSlider() {
+            if(cardnewsImages.length === 0) return;
+            
+            // 이미지 변경 및 타이틀 카운터 동기화
+            previewImg.src = cardnewsImages[currentSliderIdx];
+            cardnewsTitle.innerText = `🖼️ 카드뉴스 미리보기 (${currentSliderIdx + 1} / ${cardnewsImages.length})`;
+
+            // 첫 페이지, 마지막 페이지 도달 시 화살표 비활성화 예외처리
+            idxPrevBtn.disabled = (currentSliderIdx === 0);
+            idxNextBtn.disabled = (currentSliderIdx === cardnewsImages.length - 1);
+        }
+
+        // 화살표 클릭 동작 함수
+        function moveIdxSlide(direction) {
+            let nextTarget = currentSliderIdx + direction;
+            if(nextTarget >= 0 && nextTarget < cardnewsImages.length) {
+                currentSliderIdx = nextTarget;
+                updateIndexSlider();
+            }
+        }
+
         document.addEventListener("DOMContentLoaded", function () {
             // 1. video.html 에서 첫 번째 동영상 가져오기
             fetch('video.html')
@@ -274,27 +362,28 @@
                     }
                 }).catch(err => console.log('동영상 로드 실패:', err));
 
-            // 2. cardnews.html 에서 첫 번째 이미지 및 설명 가져오기
+            // 2. cardnews.html 에서 모든 이미지 노드 일괄 수집 후 자체 연동 슬라이더 구동
             fetch('cardnews.html')
                 .then(response => response.text())
                 .then(data => {
                     const parser = new DOMParser();
                     const htmlDoc = parser.parseFromString(data, 'text/html');
-                    const firstImg = htmlDoc.querySelector('.gallery-item img');
-                    const firstDesc = htmlDoc.querySelector('.gallery-item .desc');
+                    
+                    // cardnews.html 내 모든 이미지의 src 어트리뷰트 배열화 수집
+                    const imgElements = htmlDoc.querySelectorAll('.gallery-item img');
+                    imgElements.forEach(img => {
+                        const srcVal = img.getAttribute('src');
+                        if(srcVal) cardnewsImages.push(srcVal);
+                    });
 
-                    if (firstImg) {
-                        const previewImg = document.getElementById('previewImg');
-                        previewImg.src = firstImg.src;
+                    if (cardnewsImages.length > 0) {
                         document.getElementById('imageLoading').style.display = 'none';
-                        previewImg.style.display = 'block';
-                    }
-                    if (firstDesc) {
-                        document.getElementById('cardnewsTitle').innerText = `🖼️ 대표: ${firstDesc.innerText}`;
+                        document.getElementById('cardnewsSlider').style.display = 'flex';
+                        updateIndexSlider(); // 첫 로드 상태 렌더링
                     }
                 }).catch(err => console.log('카드뉴스 로드 실패:', err));
 
-            // 3. blog.html 에서 첫 번째 블로그 글 정보 가져오기
+            // 3. blog.html 에서 첫 번째 블로그 글 정보 가져오기 (글자 수 최대화 반영)
             fetch('blog.html')
                 .then(response => response.text())
                 .then(data => {
@@ -307,8 +396,8 @@
                         document.getElementById('previewBlogTitle').innerText = firstPostTitle.innerText;
 
                         let cleanText = firstPostDesc.innerText;
-                        if (cleanText.length > 60) {
-                            cleanText = cleanText.substring(0, 60) + '...';
+                        if (cleanText.length > 150) {
+                            cleanText = cleanText.substring(0, 150) + '...';
                         }
                         document.getElementById('previewBlogDesc').innerText = cleanText;
 

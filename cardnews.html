@@ -66,6 +66,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-shrink: 0;
         }
 
         .slider-btn:hover {
@@ -80,11 +81,10 @@
             opacity: 0.5;
         }
 
-        /* 카드 아이템 스타일 */
+        /* 카드 아이템 스타일 컨테이너 (크기 대폭 확대) */
         .gallery-container {
             width: 100%;
-            max-width: 500px;
-            /* 카드뉴스 화면 크기 제한 */
+            max-width: 600px; /* 🛠️ 사진을 크게 보여주기 위해 가로 폭 확대 */
         }
 
         .gallery-item {
@@ -92,8 +92,7 @@
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-            display: none;
-            /* 기본적으로 모든 카드를 숨김 */
+            display: none; /* 기본적으로 모든 카드를 숨김 */
         }
 
         /* 현재 보여야 할 카드만 노출 */
@@ -101,21 +100,13 @@
             display: block;
         }
 
+        /* 🛠️ 설명란이 사라졌으므로 이미지가 꽉 차고 크게 나오도록 채우기 비율 조정 */
         .gallery-item img {
             width: 100%;
-            height: 400px;
-            /* 카드뉴스에 맞게 높이 조정 */
-            object-fit: cover;
+            height: auto;
+            max-height: 700px; /* 해상도가 무너지는 것을 방지하는 최대 높이 */
+            object-fit: contain; /* 이미지 원본 비율 보존하면서 크게 노출 */
             display: block;
-        }
-
-        .gallery-item .desc {
-            padding: 1.5rem;
-            font-size: 1.1rem;
-            text-align: center;
-            font-weight: bold;
-            background: #fff;
-            border-top: 1px solid #eee;
         }
 
         /* 페이지 번호 표시 (예: 1 / 6) */
@@ -132,7 +123,7 @@
 <body>
     <header>
         <nav>
-            <h2><a href="index.html" style="color:white;">2026년도 2기 홍보 서포터즈</a></h2>
+            <h2><a href="index.html" style="color:white; text-decoration: none;">2026년도 2기 홍보 서포터즈</a></h2>
             <div>
                 <a href="index.html">홈</a>
                 <a href="video.html">동영상</a>
@@ -150,28 +141,22 @@
 
             <div class="gallery-container">
                 <div class="gallery-item active">
-                    <img src="https://picsum.photos/500/500?random=1" alt="카드뉴스1">
-                    <div class="desc">첫 번째 카드뉴스 내용 설명입니다.</div>
+                    <img src="images/1.png" alt="카드뉴스1">
                 </div>
                 <div class="gallery-item">
-                    <img src="https://picsum.photos/500/500?random=2" alt="카드뉴스2">
-                    <div class="desc">두 번째 카드뉴스 내용 설명입니다.</div>
+                    <img src="images/2.png" alt="카드뉴스2">
                 </div>
                 <div class="gallery-item">
-                    <img src="https://picsum.photos/500/500?random=3" alt="카드뉴스3">
-                    <div class="desc">세 번째 카드뉴스 내용 설명입니다.</div>
+                    <img src="images/3.png" alt="카드뉴스3">
                 </div>
                 <div class="gallery-item">
-                    <img src="https://picsum.photos/500/500?random=4" alt="카드뉴스4">
-                    <div class="desc">네 번째 카드뉴스 내용 설명입니다.</div>
+                    <img src="images/4.png" alt="카드뉴스4">
                 </div>
                 <div class="gallery-item">
-                    <img src="https://picsum.photos/500/500?random=5" alt="카드뉴스5">
-                    <div class="desc">다섯 번째 카드뉴스 내용 설명입니다.</div>
+                    <img src="images/5.png" alt="카드뉴스5">
                 </div>
                 <div class="gallery-item">
-                    <img src="https://picsum.photos/500/500?random=6" alt="카드뉴스6">
-                    <div class="desc">마지막 여섯 번째 카드뉴스 내용 설명입니다.</div>
+                    <img src="images/6.png" alt="카드뉴스6">
                 </div>
             </div>
 

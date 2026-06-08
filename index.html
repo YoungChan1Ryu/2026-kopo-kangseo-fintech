@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>2026년도 2기 홍보 서포터즈</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
@@ -13,13 +14,101 @@
         nav a:hover { color: #007bff; }
         .hero { background: linear-gradient(135deg, #007bff, #0056b3); color: white; text-align: center; padding: 4rem 1rem; }
         .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
-        .preview-section { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
-        .card { background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.2s; }
+        
+        /* 3분할 그리드 영역 */
+        .preview-section { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+            gap: 1.5rem; 
+            margin-top: 2rem; 
+            align-items: stretch; /* 1️⃣ 자식 카드들의 높이를 강제로 통일 */
+        }
+        
+        /* 카드 스타일 개편 */
+        .card { 
+            background: white; 
+            padding: 1.5rem; 
+            border-radius: 8px; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05); 
+            transition: transform 0.2s; 
+            display: flex;
+            flex-direction: column; /* 1️⃣ 내부 요소를 위에서 아래로 배치 */
+        }
         .card:hover { transform: translateY(-5px); }
-        .card h3 { margin-bottom: 0.5rem; color: #007bff; }
+        .card h3 { margin-bottom: 0.3rem; color: #007bff; }
         .card p { color: #666; font-size: 0.95rem; margin-bottom: 1rem; }
-        .btn { display: inline-block; background: #007bff; color: white; padding: 0.5rem 1rem; text-decoration: none; border-radius: 4px; font-size: 0.9rem; }
+        
+        /* 버튼이 항상 동일한 위치 위쪽에 오도록 마진 조정 */
+        .btn { 
+            align-self: flex-start; 
+            display: inline-block; 
+            background: #007bff; 
+            color: white; 
+            padding: 0.5rem 1rem; 
+            text-decoration: none; 
+            border-radius: 4px; 
+            font-size: 0.9rem; 
+            margin-bottom: 1.5rem; 
+        }
         .btn:hover { background: #0056b3; }
+        
+        /* 하단 미리보기 영역을 카드의 남은 공간 전체로 확장 */
+        .preview-content {
+            border-top: 2px dashed #e2e8f0; 
+            padding-top: 1.5rem;
+            width: 100%;
+            flex: 1; /* 1️⃣ 여백을 밀어내어 카드의 세로 길이를 완벽히 일치시킴 */
+            display: flex;
+            flex-direction: column;
+        }
+        .preview-title {
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: #4a5568;
+            margin-bottom: 0.8rem;
+        }
+        /* 데이터 로딩 중 표시 스타일 */
+        .loading-text {
+            font-size: 0.85rem;
+            color: #a0aec0;
+            font-style: italic;
+        }
+
+        /* [동영상] 반응형 유튜브 스타일 */
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 6px;
+            display: none; /* 로드 전엔 숨김 */
+        }
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%; border: 0;
+        }
+
+        /* [카드뉴스] 이미지 스타일 */
+        .image-wrapper img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 6px;
+            display: none; /* 로드 전엔 숨김 */
+        }
+
+        /* [블로그] 요약 박스 스타일 */
+        .blog-preview-box {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 1rem;
+            display: none; /* 로드 전엔 숨김 */
+            flex: 1;
+        }
+        .blog-preview-box h4 { font-size: 0.95rem; color: #1a202c; margin-bottom: 0.5rem; }
+        .blog-preview-box p { font-size: 0.85rem; color: #718096; line-height: 1.5; }
+
         footer { text-align: center; padding: 2rem; color: #aaa; font-size: 0.85rem; }
     </style>
 </head>
@@ -29,7 +118,7 @@
         <nav>
             <h2>2026년도 2기 홍보 서포터즈</h2>
             <div>
-                <a href="index.html">홈</a>
+                <a href="index.html" style="color:#007bff;">홈</a>
                 <a href="video.html">동영상</a>
                 <a href="cardnews.html">카드뉴스</a>
                 <a href="blog.html">블로그</a>
@@ -45,25 +134,122 @@
     <main class="container">
         <h2>콘텐츠 미리보기</h2>
         <div class="preview-section">
+            
             <div class="card">
                 <h3>🎬 동영상</h3>
                 <p>스마트금융과 동영상</p>
                 <a href="video.html" class="btn">영상 이동 &rarr;</a>
+                
+                <div class="preview-content">
+                    <div class="preview-title" id="videoTitle">📺 추천 영상 바로보기</div>
+                    <span class="loading-text" id="videoLoading">영상을 불러오는 중...</span>
+                    <div class="video-wrapper" id="videoWrapper">
+                        <iframe src="" referrerpolicy="strict-origin" allowfullscreen></iframe>
+                    </div>
+                </div>
             </div>
+
             <div class="card">
                 <h3>📸 카드뉴스</h3>
                 <p>스마트금융과 카드뉴스</p>
                 <a href="cardnews.html" class="btn">카드뉴스 이동 &rarr;</a>
+                
+                <div class="preview-content">
+                    <div class="preview-title" id="cardnewsTitle">🖼️ 카드뉴스 미리보기</div>
+                    <span class="loading-text" id="imageLoading">이미지를 불러오는 중...</span>
+                    <div class="image-wrapper">
+                        <img id="previewImg" src="" alt="카드뉴스 미리보기">
+                    </div>
+                </div>
             </div>
+
             <div class="card">
                 <h3>✍️ 블로그</h3>
                 <p>스마트금융과 블로그</p>
                 <a href="blog.html" class="btn">블로그 이동 &rarr;</a>
+                
+                <div class="preview-content">
+                    <div class="preview-title">📰 최신 등록된 게시글</div>
+                    <span class="loading-text" id="blogLoading">글을 불러오는 중...</span>
+                    <div class="blog-preview-box" id="blogPreviewBox">
+                        <h4 id="previewBlogTitle">💬 불러온 제목</h4>
+                        <p id="previewBlogDesc">불러온 본문 내용...</p>
+                    </div>
+                </div>
             </div>
+
         </div>
     </main>
 
     <footer>&copy; 2026년도 2기 홍보 서포터즈. All rights reserved.</footer>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            
+            // 1. video.html 에서 첫 번째 동영상 가져오기
+            fetch('video.html')
+                .then(response => response.text())
+                .then(data => {
+                    const parser = new DOMParser();
+                    const htmlDoc = parser.parseFromString(data, 'text/html');
+                    const firstIframe = htmlDoc.querySelector('.video-container iframe');
+                    const firstVideoTitle = htmlDoc.querySelector('.video-card h3');
+                    
+                    if(firstIframe) {
+                        const targetIframe = document.querySelector('#videoWrapper iframe');
+                        targetIframe.src = firstIframe.src;
+                        document.getElementById('videoLoading').style.display = 'none';
+                        document.getElementById('videoWrapper').style.display = 'block';
+                    }
+                    if(firstVideoTitle) {
+                        document.getElementById('videoTitle').innerText = `📺 추천: ${firstVideoTitle.innerText}`;
+                    }
+                }).catch(err => console.log('동영상 로드 실패:', err));
+
+            // 2. cardnews.html 에서 첫 번째 이미지 및 설명 가져오기
+            fetch('cardnews.html')
+                .then(response => response.text())
+                .then(data => {
+                    const parser = new DOMParser();
+                    const htmlDoc = parser.parseFromString(data, 'text/html');
+                    const firstImg = htmlDoc.querySelector('.gallery-item img');
+                    const firstDesc = htmlDoc.querySelector('.gallery-item .desc');
+                    
+                    if(firstImg) {
+                        const previewImg = document.getElementById('previewImg');
+                        previewImg.src = firstImg.src;
+                        document.getElementById('imageLoading').style.display = 'none';
+                        previewImg.style.display = 'block';
+                    }
+                    if(firstDesc) {
+                        document.getElementById('cardnewsTitle').innerText = `🖼️ 대표: ${firstDesc.innerText}`;
+                    }
+                }).catch(err => console.log('카드뉴스 로드 실패:', err));
+
+            // 3. blog.html 에서 첫 번째 블로그 글 정보 가져오기
+            fetch('blog.html')
+                .then(response => response.text())
+                .then(data => {
+                    const parser = new DOMParser();
+                    const htmlDoc = parser.parseFromString(data, 'text/html');
+                    const firstPostTitle = htmlDoc.querySelector('.post h3');
+                    const firstPostDesc = htmlDoc.querySelector('.post p');
+                    
+                    if(firstPostTitle && firstPostDesc) {
+                        document.getElementById('previewBlogTitle').innerText = firstPostTitle.innerText;
+                        
+                        // 대문 스페이스 공간에 맞추어 본문은 60자까지만 자르고 말줄임표(...) 처리
+                        let cleanText = firstPostDesc.innerText;
+                        if(cleanText.length > 60) {
+                            cleanText = cleanText.substring(0, 60) + '...';
+                        }
+                        document.getElementById('previewBlogDesc').innerText = cleanText;
+                        
+                        document.getElementById('blogLoading').style.display = 'none';
+                        document.getElementById('blogPreviewBox').style.display = 'block';
+                    }
+                }).catch(err => console.log('블로그 로드 실패:', err));
+        });
+    </script>
 </body>
 </html>

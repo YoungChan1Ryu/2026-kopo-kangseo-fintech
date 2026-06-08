@@ -1,29 +1,94 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <title>블로그</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
-        body { background-color: #f5f7fa; color: #333; }
-        header { background: #333; color: #fff; padding: 1rem; }
-        nav { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
-        nav a { color: #fff; text-decoration: none; margin-left: 15px; }
-        .container { max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
-        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+        }
+
+        header {
+            background: #333;
+            color: #fff;
+            padding: 1rem;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 15px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
         /* 블로그 레이아웃 */
-        .post { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 2rem; }
-        .post-meta { color: #888; font-size: 0.85rem; margin-bottom: 0.5rem; }
-        .post h3 { margin-bottom: 1rem; color: #222; }
-        .post p { margin-bottom: 1.5rem; font-size: 1rem; color: #444; }
-        .like-btn { background: #fee2e2; color: #ef4444; border: none; padding: 0.4rem 0.8rem; border-radius: 20px; cursor: pointer; font-weight: bold; }
-        .like-btn:hover { background: #fca5a5; }
+        .post {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        .post-meta {
+            color: #888;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .post h3 {
+            margin-bottom: 1rem;
+            color: #222;
+        }
+
+        .post p {
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            color: #444;
+        }
+
+        .like-btn {
+            background: #fee2e2;
+            color: #ef4444;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .like-btn:hover {
+            background: #fca5a5;
+        }
     </style>
 </head>
+
 <body>
     <header>
         <nav>
-            <h2><a href="index.html" style="color:white;">MyWeb</a></h2>
+            <h2><a href="index.html" style="color:white;">2026년도 2기 홍보 서포터즈</a></h2>
             <div>
                 <a href="index.html">홈</a>
                 <a href="video.html">동영상</a>
@@ -36,14 +101,22 @@
     <main class="container">
         <h2>✍️ 스마트금융과 블로그</h2>
         <br>
-        
+
         <article class="post">
-            <div class="post-meta">작성일: 2026-06-08 | 카테고리: 일상</div>
-            <h3>첫 번째 블로그 글 제목입니다.</h3>
-            <p>여기에 본문 내용을 자유롭게 작성하시면 됩니다. 이 웹사이트는 가볍고 빠른 HTML/CSS/JS 기반으로 빌드되어 무료 호스팅 서비스 환경에서 아주 쾌적하게 작동합니다.</p>
+            <div class="post-meta">작성일: 2026-04-01</div>
+            <h3>실용적인 커리큘럼의 강서폴리텍 스마트금융과</h3>
+            <p>안녕하세요. 9기 교육생 류영찬입니다. 저는 대학 졸업 이후 어떻게 전공을 살려야 할지 막막하던 차에 한국폴리텍대학 강서캠퍼스 스마트금융과를 알게 되었습니다. 
+                기존에 학교에서 배운 내용이 단순히 어떤 것이 있다, 어떤 곳에 쓰일 수 있다 하는 첫걸음이나 목차를 만들어온 과정이었다고 한다면
+                이곳에서의 교육과정은 저에게 그 영역들의 첫페이지부터 실무적인 활용의 맛보기까지 그 내부 페이지들을 채워주는 과정이었습니다.
+                스마트금융과의 교육과정은 한두가지 지엽적인 분야에 머무는 것이 아니라 네트워크의 개념과 구성, 데이터베이스의 활용, LLM 모델의 튜닝과 적용, 
+                블록체인 기술, 웹 프론트엔드까등 광범위하면서도 밀도있는 커리큘럼으로 이루어져 있습니다. 또한 해당 분야에 전문성을 갖추고 열성적으로 강의해주시는
+                교수님들, 탄탄한 실습 환경(특히 쉽게 접하기 어려운 서버실!), 관련 기업 교육 및 취업 연계까지 스마트금융과는 IT분야에 꿈을 가지고 뻗어나가기에 정말 
+                좋은 환경이라고 생각됩니다. 배경 지식이 없는 비전공자라고 해도 열심히 하면 따라갈 수 있고, 실제로 많은 비전공자 선배님들도 현업으로 진출하신 걸로 알고 있습니다. 
+                의지만 있다면 누구든 단기간에 도약할 수 있는 스마트금융과를 추천드립니다. 저에게 이런 행운과도 같은 기회가 주어져서 항상 감사한 마음입니다.
+            </p>
         </article>
 
-        
+
     </main>
 
     <script>
@@ -54,4 +127,5 @@
         }
     </script>
 </body>
+
 </html>

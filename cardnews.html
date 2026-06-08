@@ -1,16 +1,48 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <title>카드뉴스</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
-        body { background-color: #f5f7fa; color: #333; }
-        header { background: #333; color: #fff; padding: 1rem; }
-        nav { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
-        nav a { color: #fff; text-decoration: none; margin-left: 15px; }
-        .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
-        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+        }
+
+        header {
+            background: #333;
+            color: #fff;
+            padding: 1rem;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 15px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
         /* 카드뉴스 슬라이더 레이아웃 */
         .slider-wrapper {
             display: flex;
@@ -35,9 +67,11 @@
             align-items: center;
             justify-content: center;
         }
+
         .slider-btn:hover {
             background-color: #0056b3;
         }
+
         /* 첫/마지막 카드에서 버튼이 비활성화되었을 때의 스타일 */
         .slider-btn:disabled {
             background-color: #ccc;
@@ -49,25 +83,32 @@
         /* 카드 아이템 스타일 */
         .gallery-container {
             width: 100%;
-            max-width: 500px; /* 카드뉴스 화면 크기 제한 */
+            max-width: 500px;
+            /* 카드뉴스 화면 크기 제한 */
         }
+
         .gallery-item {
             background: white;
             border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-            display: none; /* 기본적으로 모든 카드를 숨김 */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            display: none;
+            /* 기본적으로 모든 카드를 숨김 */
         }
+
         /* 현재 보여야 할 카드만 노출 */
         .gallery-item.active {
             display: block;
         }
+
         .gallery-item img {
             width: 100%;
-            height: 400px; /* 카드뉴스에 맞게 높이 조정 */
+            height: 400px;
+            /* 카드뉴스에 맞게 높이 조정 */
             object-fit: cover;
             display: block;
         }
+
         .gallery-item .desc {
             padding: 1.5rem;
             font-size: 1.1rem;
@@ -87,6 +128,7 @@
         }
     </style>
 </head>
+
 <body>
     <header>
         <nav>
@@ -102,7 +144,7 @@
 
     <main class="container">
         <h2>📸 스마트금융과 카드뉴스</h2>
-        
+
         <div class="slider-wrapper">
             <button class="slider-btn" id="prevBtn" onclick="moveSlide(-1)">&lt;</button>
 
@@ -143,7 +185,7 @@
         let currentIdx = 0; // 현재 보고 있는 슬라이드 인덱스 (0부터 시작)
         const slides = document.querySelectorAll('.gallery-item');
         const totalSlides = slides.length;
-        
+
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
         const pageIndicator = document.getElementById('pageIndicator');
@@ -151,10 +193,10 @@
         function updateSlider() {
             // 1. 모든 슬라이드에서 active 클래스 제거하여 숨김
             slides.forEach(slide => slide.classList.remove('active'));
-            
+
             // 2. 현재 인덱스의 슬라이드만 active 클래스 추가하여 노출
             slides[currentIdx].classList.add('active');
-            
+
             // 3. 페이지 번호 텍스트 업데이트 (index는 0부터 시작하므로 +1)
             pageIndicator.innerText = `${currentIdx + 1} / ${totalSlides}`;
 
@@ -176,7 +218,7 @@
         function moveSlide(direction) {
             // 새롭게 이동할 인덱스 계산
             let nextIdx = currentIdx + direction;
-            
+
             // 범위를 벗어나지 않는 안전한 경우에만 이동 처리
             if (nextIdx >= 0 && nextIdx < totalSlides) {
                 currentIdx = nextIdx;
@@ -188,4 +230,5 @@
         updateSlider();
     </script>
 </body>
+
 </html>

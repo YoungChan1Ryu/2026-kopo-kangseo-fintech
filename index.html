@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026년도 2기 홍보 서포터즈</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #f5f7fa; color: #333; line-height: 1.6; }
+        header { background: #333; color: #fff; padding: 1rem; position: sticky; top: 0; z-index: 100; }
+        nav { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
+        nav a { color: #fff; text-decoration: none; margin-left: 15px; font-weight: bold; }
+        nav a:hover { color: #007bff; }
+        .hero { background: linear-gradient(135deg, #007bff, #0056b3); color: white; text-align: center; padding: 4rem 1rem; }
+        .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+        .preview-section { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+        .card { background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.2s; }
+        .card:hover { transform: translateY(-5px); }
+        .card h3 { margin-bottom: 0.5rem; color: #007bff; }
+        .card p { color: #666; font-size: 0.95rem; margin-bottom: 1rem; }
+        .btn { display: inline-block; background: #007bff; color: white; padding: 0.5rem 1rem; text-decoration: none; border-radius: 4px; font-size: 0.9rem; }
+        .btn:hover { background: #0056b3; }
+        footer { text-align: center; padding: 2rem; color: #aaa; font-size: 0.85rem; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <h2>2026년도 2기 홍보 서포터즈</h2>
+            <div>
+                <a href="index.html">홈</a>
+                <a href="video.html">동영상</a>
+                <a href="cardnews.html">카드뉴스</a>
+                <a href="blog.html">블로그</a>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>2026년도 2기 홍보 서포터즈 산출물(류영찬)</h1>
+        <p>한국폴리텍대학 서울강서캠퍼스 스마트금융과</p>
+    </section>
+
+    <main class="container">
+        <h2>콘텐츠 미리보기</h2>
+        <div class="preview-section">
+            <div class="card">
+                <h3>🎬 동영상</h3>
+                <p>스마트금융과 동영상</p>
+                <a href="video.html" class="btn">영상 이동 &rarr;</a>
+            </div>
+            <div class="card">
+                <h3>📸 카드뉴스</h3>
+                <p>스마트금융과 카드뉴스</p>
+                <a href="cardnews.html" class="btn">카드뉴스 이동 &rarr;</a>
+            </div>
+            <div class="card">
+                <h3>✍️ 블로그</h3>
+                <p>스마트금융과 블로그</p>
+                <a href="blog.html" class="btn">블로그 이동 &rarr;</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>&copy; 2026년도 2기 홍보 서포터즈. All rights reserved.</footer>
+
+</body>
+</html>

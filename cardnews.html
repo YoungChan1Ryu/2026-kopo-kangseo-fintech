@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>카드뉴스</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
+        body { background-color: #f5f7fa; color: #333; }
+        header { background: #333; color: #fff; padding: 1rem; }
+        nav { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
+        nav a { color: #fff; text-decoration: none; margin-left: 15px; }
+        .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+        
+        /* 카드뉴스 슬라이더 레이아웃 */
+        .slider-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2rem;
+            gap: 20px;
+        }
+
+        /* 슬라이더 버튼 스타일 */
+        .slider-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: background-color 0.2s, opacity 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .slider-btn:hover {
+            background-color: #0056b3;
+        }
+        /* 첫/마지막 카드에서 버튼이 비활성화되었을 때의 스타일 */
+        .slider-btn:disabled {
+            background-color: #ccc;
+            color: #fff;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        /* 카드 아이템 스타일 */
+        .gallery-container {
+            width: 100%;
+            max-width: 500px; /* 카드뉴스 화면 크기 제한 */
+        }
+        .gallery-item {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            display: none; /* 기본적으로 모든 카드를 숨김 */
+        }
+        /* 현재 보여야 할 카드만 노출 */
+        .gallery-item.active {
+            display: block;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 400px; /* 카드뉴스에 맞게 높이 조정 */
+            object-fit: cover;
+            display: block;
+        }
+        .gallery-item .desc {
+            padding: 1.5rem;
+            font-size: 1.1rem;
+            text-align: center;
+            font-weight: bold;
+            background: #fff;
+            border-top: 1px solid #eee;
+        }
+
+        /* 페이지 번호 표시 (예: 1 / 6) */
+        .page-counter {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 1rem;
+            color: #666;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <h2><a href="index.html" style="color:white;">2026년도 2기 홍보 서포터즈</a></h2>
+            <div>
+                <a href="index.html">홈</a>
+                <a href="video.html">동영상</a>
+                <a href="cardnews.html" style="color:#007bff;">카드뉴스</a>
+                <a href="blog.html">블로그</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h2>📸 스마트금융과 카드뉴스</h2>
+        
+        <div class="slider-wrapper">
+            <button class="slider-btn" id="prevBtn" onclick="moveSlide(-1)">&lt;</button>
+
+            <div class="gallery-container">
+                <div class="gallery-item active">
+                    <img src="https://picsum.photos/500/500?random=1" alt="카드뉴스1">
+                    <div class="desc">첫 번째 카드뉴스 내용 설명입니다.</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://picsum.photos/500/500?random=2" alt="카드뉴스2">
+                    <div class="desc">두 번째 카드뉴스 내용 설명입니다.</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://picsum.photos/500/500?random=3" alt="카드뉴스3">
+                    <div class="desc">세 번째 카드뉴스 내용 설명입니다.</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://picsum.photos/500/500?random=4" alt="카드뉴스4">
+                    <div class="desc">네 번째 카드뉴스 내용 설명입니다.</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://picsum.photos/500/500?random=5" alt="카드뉴스5">
+                    <div class="desc">다섯 번째 카드뉴스 내용 설명입니다.</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://picsum.photos/500/500?random=6" alt="카드뉴스6">
+                    <div class="desc">마지막 여섯 번째 카드뉴스 내용 설명입니다.</div>
+                </div>
+            </div>
+
+            <button class="slider-btn" id="nextBtn" onclick="moveSlide(1)">&gt;</button>
+        </div>
+
+        <div class="page-counter" id="pageIndicator">1 / 6</div>
+    </main>
+
+    <script>
+        let currentIdx = 0; // 현재 보고 있는 슬라이드 인덱스 (0부터 시작)
+        const slides = document.querySelectorAll('.gallery-item');
+        const totalSlides = slides.length;
+        
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const pageIndicator = document.getElementById('pageIndicator');
+
+        function updateSlider() {
+            // 1. 모든 슬라이드에서 active 클래스 제거하여 숨김
+            slides.forEach(slide => slide.classList.remove('active'));
+            
+            // 2. 현재 인덱스의 슬라이드만 active 클래스 추가하여 노출
+            slides[currentIdx].classList.add('active');
+            
+            // 3. 페이지 번호 텍스트 업데이트 (index는 0부터 시작하므로 +1)
+            pageIndicator.innerText = `${currentIdx + 1} / ${totalSlides}`;
+
+            // 4. 첫 번째 이미지일 때 '이전' 버튼 작동 금지(disabled)
+            if (currentIdx === 0) {
+                prevBtn.disabled = true;
+            } else {
+                prevBtn.disabled = false;
+            }
+
+            // 5. 마지막 이미지일 때 '다음' 버튼 작동 금지(disabled)
+            if (currentIdx === totalSlides - 1) {
+                nextBtn.disabled = true;
+            } else {
+                nextBtn.disabled = false;
+            }
+        }
+
+        function moveSlide(direction) {
+            // 새롭게 이동할 인덱스 계산
+            let nextIdx = currentIdx + direction;
+            
+            // 범위를 벗어나지 않는 안전한 경우에만 이동 처리
+            if (nextIdx >= 0 && nextIdx < totalSlides) {
+                currentIdx = nextIdx;
+                updateSlider();
+            }
+        }
+
+        // 페이지가 처음 로드되었을 때 버튼 상태 초기화 수행
+        updateSlider();
+    </script>
+</body>
+</html>
